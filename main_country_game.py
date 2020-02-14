@@ -20,8 +20,8 @@ class Application(Frame):
         self.rule_label = Label(self, text="Rules:")
         self.rule_label.grid(row=1, column=0)
         rules= "You will be given a country to start. You will take the last letter of this country, and submit" \
-               "back to me a new country beginning with this letter, repeating for 10 rounds. Good luck."
-        self.rule_text=Text(self, width=25, height=8, wrap=WORD)
+               " back to me a new country beginning with this letter, repeating for 10 rounds. Good luck."
+        self.rule_text=Text(self, width=25, height=8, wrap=WORD, bg="light grey")
         self.rule_text.grid(row=1, column=1)
         self.rule_text.insert(0.0, rules)
 
@@ -37,7 +37,6 @@ class Application(Frame):
         Label(self, text="").grid(row=8, column=0, columnspan=2)
         Button(self, text="Give Up Button", bg="red", fg="white", command=root.destroy).grid(row=9, column=0,
                                                                                              columnspan=2)
-
     def display_country(self):
         self.rule_text.destroy()
         self.rule_label.destroy()
@@ -55,14 +54,15 @@ class Application(Frame):
             self.country_list.remove(self.country_list[0])
             self.country_list.remove(guess.title())
             self.countryLabel['text'] = "Country: " + self.country_list[0]
+            self.correctLabel['fg'] = "green"
             self.correctLabel['text'] = "Correct!"
         else:
-            self.correctLabel['text']=""
-            self.countryLabel['text'] = "Incorrect or Already Used Country. Try Again: " + self.country_list[0]
+            self.correctLabel['fg']="red"
+            self.correctLabel['text']="Invalid/Used"
+            self.countryLabel['text'] = "Try Again: " + self.country_list[0]
         if self.points==10:
             self.countryLabel['text'] = "Congratulations! You win!"
             self.guess_ent.destroy()
-
 root=Tk()
 root.title("Country Knowledge Tester by Grant Lewison")
 app = Application(root)
