@@ -40,7 +40,7 @@ class Application(Frame):
         self.getButton.destroy()
         Button(self, text="Submit Country", command=self.country_submitted, bg="DodgerBlue2", fg="white").grid(
             row=4, column=0, columnspan=2)
-        self.countryLabel['text'] = self.country_list[0]
+        self.countryLabel['text'] = "Country: " + self.country_list[0]
     def country_submitted(self):
         guess = self.guess_ent.get()
         if guess.title() in self.country_list and str(self.country_list[0])[-1]==guess.lower()[0]:
@@ -48,7 +48,7 @@ class Application(Frame):
             self.point_label['text'] = "Points:", self.points
             self.country_list.remove(self.country_list[0])
             self.country_list.remove(guess.title())
-            self.countryLabel['text'] = self.country_list[0]
+            self.countryLabel['text'] = "Country: " + self.country_list[0]
         else:
             self.countryLabel['text'] = "Incorrect or Already Used Country. Try Again: " + self.country_list[0]
         if self.points==10:
