@@ -1,5 +1,6 @@
+# Do You Know Your Countries?
+# Grant Lewison, ATCS Freshman 2023
 from tkinter import *
-import time
 import random
 class Application(Frame):
     def __init__(self, master):
