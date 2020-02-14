@@ -1,6 +1,5 @@
 from tkinter import *
 import random
-import time
 class Application(Frame):
     def __init__(self, master):
         super().__init__(master)
@@ -14,29 +13,33 @@ class Application(Frame):
         self.points=0
         self.create_widgets()
     def create_widgets(self):
-        Label(self, text="Welcome To The Country Knowledge Test!", font="COMIC 14").grid(row=0, column=0, columnspan=3)
-        self.rule_label1 = Label(self, text="Rules: I will give you a country to start. "
-                                            "You will take the last "
-                "letter of this country, and list back to me a ", font="COMIC 8")
-        self.rule_label1.grid(row=1, column=0, columnspan=3)
-        self.rule_label2 = Label(self, text="new country beginning with that letter. Good luck, and press start "
-                         "when you are ready to begin.", font="COMIC 8")
-        self.rule_label2.grid(row=2, column=0, columnspan=3)
+        Label(self, text="Country Knowledge Test!", font="COMIC 14", bg="IndianRed1").grid(
+            row=0, column=0, columnspan=2)
+        self.rule_label = Label(self, text="Rules:")
+        self.rule_label.grid(row=1, column=0)
+        rules= "Rules: I will give you a country to start. You will take the last letter of this country, and submit" \
+               "back to me a new country beginning with this letter. Good luck. The game stops at 15 points."
+        self.rule_text=Text(self, width=27, height=8, wrap=WORD)
+        self.rule_text.grid(row=1, column=1)
+        self.rule_text.insert(0.0, rules)
+
         self.countryLabel = Label(self, text="", font="system 17")
-        self.countryLabel.grid(row=3, column=0, columnspan=3)
-        self.getButton = Button(self, text="Get A Country", command=self.display_country)
-        self.getButton.grid(row=4, column=1)
-        Label(self, text="").grid(row=6, column=0, columnspan=3)
-        self.point_label = Label(self, text="Points: 0")
-        self.point_label.grid(row=7, column=1)
-        Button(self, text="Give Up Button", command=root.destroy).grid(row=8, column=2)
+        self.countryLabel.grid(row=3, column=0, columnspan=2)
+        self.getButton = Button(self, text="Generate Country",
+                                command=self.display_country, bg="DodgerBlue2", fg="white")
+        self.getButton.grid(row=4, column=0, columnspan=2)
+        Label(self, text="").grid(row=6, column=0, columnspan=2)
+        self.point_label = Label(self, text="Points: 0", font="system 15")
+        self.point_label.grid(row=7, column=0, columnspan=2)
+        Button(self, text="Give Up Button", bg="red", fg="white", command=root.destroy).grid(row=8, column=1, sticky=E)
     def display_country(self):
-        self.rule_label1.destroy()
-        self.rule_label2.destroy()
+        self.rule_text.destroy()
+        self.rule_label.destroy()
         self.guess_ent = Entry(self)
-        self.guess_ent.grid(row=5, column=1)
+        self.guess_ent.grid(row=5, column=0, columnspan=2)
         self.getButton.destroy()
-        Button(self, text="Submit Country", command=self.country_submitted).grid(row=4, column=1)
+        Button(self, text="Submit Country", command=self.country_submitted, bg="DodgerBlue2", fg="white").grid(
+            row=4, column=0, columnspan=2)
         self.countryLabel['text'] = self.country_list[0]
     def country_submitted(self):
         guess = self.guess_ent.get()
@@ -48,12 +51,11 @@ class Application(Frame):
             self.countryLabel['text'] = self.country_list[0]
         else:
             self.countryLabel['text'] = "Incorrect or Already Used Country. Try Again: " + self.country_list[0]
-        if self.points==15:
+        if self.points==10:
             self.countryLabel['text'] = "Congratulations! You win!"
 
 
 root=Tk()
 root.title("Country Knowledge Tester by Grant Lewison")
-root.geometry("500x500")
 app = Application(root)
 root.mainloop()
